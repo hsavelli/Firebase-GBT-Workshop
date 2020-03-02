@@ -156,44 +156,7 @@ namespace Hamster {
     // Sets the default values for remote config.  These are the values that will
     // be used if we haven't fetched yet.
     System.Threading.Tasks.Task InitializeRemoteConfig() {
-      Dictionary<string, object> defaults = new Dictionary<string, object>();
-
-      // VR Viewing height:
-      defaults.Add(StringConstants.RemoteConfigVRHeightScale, 0.65f);
-      // Physics defaults:
-      defaults.Add(StringConstants.RemoteConfigPhysicsGravity, -20.0f);
-      // Invites defaults:
-      defaults.Add(StringConstants.RemoteConfigInviteTitleText,
-          StringConstants.DefaultInviteTitleText);
-      defaults.Add(StringConstants.RemoteConfigInviteMessageText,
-          StringConstants.DefaultInviteMessageText);
-      defaults.Add(StringConstants.RemoteConfigInviteCallToActionText,
-          StringConstants.DefaultInviteCallToActionText);
-      defaults.Add(StringConstants.RemoteConfigEmailContentHtml,
-          StringConstants.DefaultEmailContentHtml);
-      defaults.Add(StringConstants.RemoteConfigEmailSubjectText,
-          StringConstants.DefaultEmailSubjectText);
-
-      // Defaults for Map Objects:
-      // Acceleration Tile
-      defaults.Add(StringConstants.RemoteConfigAccelerationTileForce, 24.0f);
-      // Drag Tile
-      defaults.Add(StringConstants.RemoteConfigSandTileDrag, 5.0f);
-      // Jump Tile
-      defaults.Add(StringConstants.RemoteConfigJumpTileVelocity, 8.0f);
-      // Mine Tile
-      defaults.Add(StringConstants.RemoteConfigMineTileForce, 10.0f);
-      defaults.Add(StringConstants.RemoteConfigMineTileRadius, 2.0f);
-      defaults.Add(StringConstants.RemoteConfigMineTileUpwardsMod, 0.2f);
-      // Spikes Tile
-      defaults.Add(StringConstants.RemoteConfigSpikesTileForce, 10.0f);
-      defaults.Add(StringConstants.RemoteConfigSpikesTileRadius, 1.0f);
-      defaults.Add(StringConstants.RemoteConfigSpikesTileUpwardsMod, -0.5f);
-      // Feature Flags
-      defaults.Add(StringConstants.RemoteConfigGameplayRecordingEnabled, false);
-
-      Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
-      return Firebase.RemoteConfig.FirebaseRemoteConfig.FetchAsync(System.TimeSpan.Zero);
+      return null;
     }
 
     // When the app starts, check to make sure that we have
@@ -206,35 +169,26 @@ namespace Hamster {
         Firebase.FirebaseApp.FixDependenciesAsync().ContinueWith(task => {
           dependencyStatus = Firebase.FirebaseApp.CheckDependencies();
           if (dependencyStatus == Firebase.DependencyStatus.Available) {
-            InitializeFirebaseComponents();
-          } else {
+                InitializeFirebaseComponents();
+            } else {
             Debug.LogError(
                 "Could not resolve all Firebase dependencies: " + dependencyStatus);
             Application.Quit();
           }
         });
       } else {
-        InitializeFirebaseComponents();
-      }
+                InitializeFirebaseComponents();
+            }
     }
 
     void InitializeFirebaseComponents() {
-      System.Threading.Tasks.Task.WhenAll(
-          InitializeRemoteConfig()
-        ).ContinueWith(task => { firebaseInitialized = true; });
+        firebaseInitialized = true;
     }
 
     // Actually start the game, once we've verified that everything
     // is working and we have the firebase prerequisites ready to go.
     void StartGame() {
-      // FirebaseApp is responsible for starting up Crashlytics, when the core app is started.
-      // To ensure that the core of FirebaseApp has started, grab the default instance which
-      // is lazily initialized.
       FirebaseApp app = FirebaseApp.DefaultInstance;
-
-      // Remote Config data has been fetched, so this applies it for this play session:
-      Firebase.RemoteConfig.FirebaseRemoteConfig.ActivateFetched();
-
       CommonData.prefabs = FindObjectOfType<PrefabList>();
       CommonData.mainCamera = FindObjectOfType<CameraController>();
       CommonData.mainGame = this;
@@ -244,7 +198,7 @@ namespace Hamster {
       // Setup database url when running in the editor
 #if UNITY_EDITOR
       if (CommonData.app.Options.DatabaseUrl == null) {
-        CommonData.app.SetEditorDatabaseUrl("https://YOUR-PROJECT-ID.firebaseio.com");
+        CommonData.app.SetEditorDatabaseUrl("https://fir-gbt-workshop.firebaseio.com");
       }
 #endif
 

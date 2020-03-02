@@ -14,7 +14,6 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using Firebase.Leaderboard;
 
 namespace Hamster.Menus {
 
@@ -31,6 +30,5 @@ namespace Hamster.Menus {
     public GUIButton TimeFrameButtonAllTime;
     public Text TimeFrameAllTimeText;
     public GUIButton BackButton;
-    public LeaderboardController LeaderboardControllerPrefab;
   }
 }

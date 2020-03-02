@@ -93,16 +93,13 @@ namespace Hamster.States {
         CommonData.vrPointer.SetActive(false);
       }
       Time.timeScale = 1.0f;
-      double gravity_y =
-        Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue(
-            StringConstants.RemoteConfigPhysicsGravity).DoubleValue;
+      double gravity_y = -10.0;
       Physics.gravity = new Vector3(0, (float)gravity_y, 0);
       CommonData.gameWorld.ResetMap();
       Utilities.HideDuringGameplay.OnGameplayStateChange(true);
       CommonData.mainCamera.mode = CameraController.CameraMode.Gameplay;
 
-      gameplayRecordingEnabled = Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigGameplayRecordingEnabled).BooleanValue;
+      gameplayRecordingEnabled = false;
 
       if (gameplayRecordingEnabled) {
         gameplayRecorder = new GameplayRecorder(CommonData.gameWorld.worldMap.name, 1);

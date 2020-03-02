@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Firebase.Database;
-using Firebase.Leaderboard;
 using Firebase.Storage;
 using System;
 using System.Collections;
@@ -59,52 +57,11 @@ namespace Hamster {
     }
 
     // Uploads the time data to the database, and returns the current top time list.
-    public static Task<UserScore> UploadReplay(
+    public static void UploadReplay(
         long time,
         LevelMap map,
         ReplayData replay) {
-      // Get a client-generated unique id based on timestamp and random number.
-      string key = FirebaseDatabase.DefaultInstance.RootReference.Push().Key;
-
-      Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-      string name = (auth.CurrentUser != null && !string.IsNullOrEmpty(auth.CurrentUser.DisplayName))
-        ? auth.CurrentUser.DisplayName
-        : StringConstants.UploadScoreDefaultName;
-      string userId = (auth.CurrentUser != null && !string.IsNullOrEmpty(auth.CurrentUser.UserId))
-        ? auth.CurrentUser.UserId
-        : StringConstants.UploadScoreDefaultName;
-      string replayPath = replay != null ? Storage_Replay_Root_Folder + GetPath(map) + key : null;
-
-      var userScore = new Firebase.Leaderboard.UserScore(
-          userId,
-          name,
-          time,
-          DateTime.Now.Ticks / TimeSpan.TicksPerSecond,
-          new Dictionary<string, object> {{Database_Property_ReplayPath, replayPath}});
-
-      UploadConfig config = new UploadConfig() {
-        key = key,
-        storagePath = replayPath,
-        dbRankPath = GetDBRankPath(map) + key,
-        dbSharedReplayPath = GetDBSharedReplayPath(map) + key,
-        shareReplay = replay != null //TODO(chkuang): && GameOption.shareReplay
-      };
-
-      if (replay == null) {
-        // Nothing to upload, return user score to upload to leaderboard.
-        return Task.FromResult(userScore);
-      } else {
-        return UploadReplayData(userScore, replay, config)
-            .ContinueWith(task => {
-              if (config.shareReplay) {
-                var dbRef = FirebaseDatabase.DefaultInstance.RootReference;
-                return dbRef.Child(config.dbSharedReplayPath)
-                    .SetValueAsync(userScore.ToDictionary());
-              } else {
-                return null;
-              };
-            }).ContinueWith(task => userScore);
-      }
+      
     }
 
     // Gets the path for the top ranks on the database, given the level's database path
@@ -131,50 +88,13 @@ namespace Hamster {
 
     // Returns the top times, given the level's database path and map id.
     // Upload the replay data to Firebase Storage
-    private static Task<StorageMetadata> UploadReplayData(
-        UserScore userScore, ReplayData replay, UploadConfig config) {
-      StorageReference storageRef =
-        FirebaseStorage.DefaultInstance.GetReference(config.storagePath);
-
-      // Serializing replay data to byte array
-      System.IO.MemoryStream stream = new System.IO.MemoryStream();
-      replay.Serialize(stream);
-      stream.Position = 0;
-      byte[] serializedData = stream.ToArray();
-
-      // Add database path and time to metadata for future usage
-      MetadataChange newMetadata = new MetadataChange {
-        CustomMetadata = new Dictionary<string, string> {
-            {"DatabaseReplayPath", config.dbSharedReplayPath},
-            {"DatabaseRankPath", config.dbRankPath},
-            {"Time", userScore.Score.ToString()},
-            {"Shared", config.shareReplay.ToString()},
-          }
-      };
-
-      return storageRef.PutBytesAsync(serializedData, newMetadata);
+    private static Task<StorageMetadata> UploadReplayData() {
+      return null;
     }
 
     // Utility function to get the top shared replay record storage path from the database
     public static Task<string> GetBestSharedReplayPathAsync(LevelMap map) {
-      DatabaseReference reference =
-        FirebaseDatabase.DefaultInstance.GetReference(GetDBSharedReplayPath(map));
-
-      return reference.OrderByChild(Database_Property_Time).LimitToFirst(1).GetValueAsync()
-        .ContinueWith((task) => {
-          if (task.Result.ChildrenCount == 0) {
             return null;
-          }
-
-          UserScore replayScore = UserScore.CreateScoreFromRecord(task.Result.Children.First());
-          if (replayScore != null &&
-              replayScore.OtherData != null &&
-              replayScore.OtherData.ContainsKey(Database_Property_ReplayPath)) {
-            return replayScore.OtherData[Database_Property_ReplayPath] as string;
-          }
-
-          return null;
-        });
     }
   }
 }

@@ -143,7 +143,7 @@ namespace Hamster.States {
       if (source == menuComponent.CancelButton.gameObject) {
         CancelButtonPressed();
       } else if (source == menuComponent.TopTimesButton.gameObject) {
-        manager.PushState(new TopTimes(null));
+        manager.PushState(new TopTimes());
       } else if (source == menuComponent.PlayButton.gameObject) {
         if (CommonData.inVrMode) {
           manager.PushState(new ControllerHelp(Gameplay.GameplayMode.Gameplay));

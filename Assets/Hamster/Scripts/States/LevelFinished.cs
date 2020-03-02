@@ -15,7 +15,6 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Firebase.Leaderboard;
 
 namespace Hamster.States {
   class LevelFinished : BaseState {
@@ -40,8 +39,6 @@ namespace Hamster.States {
     // Unity component for the GUI Menu.
     Menus.LevelFinishedGUI dialogComponent;
 
-    private LeaderboardController LeaderboardController;
-
     Gameplay.GameplayMode mode;
     public LevelFinished(Gameplay.GameplayMode mode) {
       this.mode = mode;
@@ -56,8 +53,8 @@ namespace Hamster.States {
 
       // Only log completion if the level is not being edited, to ignore in progress levels.
       if (!CommonData.gameWorld.HasPendingEdits) {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventMapFinished,
-          StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
+        Debug.Log(StringConstants.AnalyticsEventMapFinished + 
+          StringConstants.AnalyticsParamMapId +  CommonData.gameWorld.worldMap.mapId);
       }
 
       dialogComponent = SpawnUI<Menus.LevelFinishedGUI>(StringConstants.PrefabsLevelFinishedMenu);
@@ -129,18 +126,9 @@ namespace Hamster.States {
       } else if (source == dialogComponent.RetryButton.gameObject) {
         manager.SwapState(new Gameplay(mode));
       } else if (source == dialogComponent.SubmitButton.gameObject) {
-        LeaderboardController = LeaderboardController ??
-            GameObject.FindObjectOfType<LeaderboardController>() ??
-            InstantiateLeaderboardController();
-        manager.PushState(new UploadTime(ElapsedGameTime, LeaderboardController));
       } else if (source == dialogComponent.MainButton.gameObject) {
         manager.ClearStack(new MainMenu());
       }
-    }
-
-    private LeaderboardController InstantiateLeaderboardController() {
-      Debug.Log("Creating LeaderboardController from LevelFinished.");
-      return GameObject.Instantiate(dialogComponent.LeaderboardControllerPrefab);
     }
   }
 }

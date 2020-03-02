@@ -56,15 +56,7 @@ namespace Hamster.States {
 
     // Start gathering analytic data.
     void InitializeAnalytics() {
-      Firebase.Analytics.FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-
-      // Set the user's sign up method.
-      Firebase.Analytics.FirebaseAnalytics.SetUserProperty(
-        Firebase.Analytics.FirebaseAnalytics.UserPropertySignUpMethod,
-        "Google");
-
-      if (CommonData.currentUser != null)
-        Firebase.Analytics.FirebaseAnalytics.SetUserId(CommonData.currentUser.data.id);
+     
     }
 
     // Got back from either fetching userdata from the database, or

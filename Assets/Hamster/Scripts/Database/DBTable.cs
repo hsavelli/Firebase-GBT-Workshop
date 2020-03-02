@@ -44,13 +44,11 @@ public class DBTable<T> {
     DiscardRemoteChanges();
   }
 
-  Firebase.Database.FirebaseDatabase database;
   Firebase.FirebaseApp app;
 
   public DBTable(string name, Firebase.FirebaseApp app) {
     this.app = app;
     tableName = name;
-    database = Firebase.Database.FirebaseDatabase.GetInstance(this.app);
     data = new Dictionary<string, DBObj<T>>();
     newData = new Dictionary<string, T>();
     deletedEntries = new List<string>();
@@ -59,17 +57,11 @@ public class DBTable<T> {
   }
 
   private void addListeners() {
-    Firebase.Database.DatabaseReference dbRef = database.GetReference(tableName);
-    dbRef.ChildAdded += OnChildAdded;
-    dbRef.ChildChanged += OnChildChanged;
-    dbRef.ChildRemoved += OnChildRemoved;
+    
   }
 
   private void removeListeners() {
-    Firebase.Database.DatabaseReference dbRef = database.GetReference(tableName);
-    dbRef.ChildAdded -= OnChildAdded;
-    dbRef.ChildChanged -= OnChildChanged;
-    dbRef.ChildRemoved -= OnChildRemoved;
+    
   }
 
   public void Add(string key, T value) {
@@ -95,53 +87,16 @@ public class DBTable<T> {
     return JsonUtility.FromJson<T>(json);
   }
 
-  void OnChildAdded(object sender, Firebase.Database.ChildChangedEventArgs args) {
-    bool lockSuccess = Monitor.TryEnter(clearMutexLock);
-    if (!lockSuccess) return; // We don't care about changes if we're already mid-clear.
-    if (args.DatabaseError != null) {
-      Debug.LogError(args.DatabaseError);
-      return;
-    }
-    T newValue = GetFromJson(args.Snapshot.GetRawJsonValue());
-    lock (applyChangeLock) {
-      string key = args.Snapshot.Key;
-      newData[key] = newValue;
-      areChangesPending = true;
-    }
-    Monitor.Exit(clearMutexLock);
+  void OnChildAdded() {
+    
   }
 
-  void OnChildChanged(object sender, Firebase.Database.ChildChangedEventArgs args) {
-    if (!Monitor.TryEnter(clearMutexLock)) return;
-    if (args.DatabaseError != null) {
-      Debug.LogError(args.DatabaseError);
-      return;
-    }
-    T newValue = GetFromJson(args.Snapshot.GetRawJsonValue());
-    lock (applyChangeLock) {
-      string key = args.Snapshot.Key;
-      newData[key] = newValue;
-      areChangesPending = true;
-    }
-    Monitor.Exit(clearMutexLock);
+  void OnChildChanged() {
+    
   }
 
-  void OnChildRemoved(object sender, Firebase.Database.ChildChangedEventArgs args) {
-    if (!Monitor.TryEnter(clearMutexLock)) return;
-    if (args.DatabaseError != null) {
-      Debug.LogError(args.DatabaseError);
-      return;
-    }
-    lock (applyChangeLock) {
-      string key = args.Snapshot.Key;
-      newData.Remove(key);
-      data.Remove(key);
-      if (!deletedEntries.Contains(key)) {
-        deletedEntries.Add(key);
-      }
-      areChangesPending = true;
-    }
-    Monitor.Exit(clearMutexLock);
+  void OnChildRemoved() {
+    
   }
 
   public void ApplyRemoteChanges() {
@@ -168,36 +123,19 @@ public class DBTable<T> {
 
   // Returns a guaranteed unique string, usable as a key value.
   public string GetUniqueKey() {
-    return database.RootReference.Child(tableName).Push().Key;
+    return null;
   }
 
   // Clears out the table on the server.
   public void Clear() {
     lock (clearMutexLock) {
-      database.RootReference.Child(tableName).SetValueAsync(null).ContinueWith(task => {
-        if (task.IsFaulted)
-          Debug.LogError("Task faulted!\n" + task.Exception.ToString());
-        data.Clear();
-        newData.Clear();
-        deletedEntries.Clear();
-        DiscardRemoteChanges();
-      });
+      
     }
   }
 
   public void PushData() {
     lock (applyChangeLock) {
-      UnityEngine.Assertions.Assert.IsNotNull(database, "Database ref is null!");
-      foreach (KeyValuePair<string, DBObj<T>> pair in data) {
-        if (pair.Value.isDirty) {
-          string json = JsonUtility.ToJson(pair.Value.data);
-          if (json == "{}")
-            Debug.LogError("Warning - DBTable serialized [" + typeof(T).ToString()
-             + "] as an empty string.\nMake sure at least one member is public!");
-          database.RootReference.Child(tableName).Child(pair.Key).SetRawJsonValueAsync(json);
-          pair.Value.isDirty = false;
-        }
-      }
+      
     }
   }
 }

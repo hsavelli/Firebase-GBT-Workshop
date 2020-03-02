@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Firebase.Database;
 using UnityEngine;
 
 namespace Hamster.States {
@@ -27,7 +26,6 @@ namespace Hamster.States {
     string path;
     bool isComplete = false;
     bool wasSuccessful = false;
-    FirebaseDatabase database;
     Menus.SingleLabelGUI menuComponent;
     float timeoutTime;
 
@@ -38,28 +36,8 @@ namespace Hamster.States {
     // Initialization method.  Called after the state
     // is added to the stack.
     public override void Initialize() {
-      database = FirebaseDatabase.GetInstance(CommonData.app);
-      database.GetReference(path).ValueChanged += HandleResult;
       menuComponent = SpawnUI<Menus.SingleLabelGUI>(StringConstants.PrefabsSingleLabelMenu);
       timeoutTime = Time.realtimeSinceStartup + TimeoutSeconds;
-    }
-
-    void HandleResult(object sender, ValueChangedEventArgs args) {
-      if (args.DatabaseError != null) {
-        Debug.LogError("Database error :" + args.DatabaseError.Code + ":\n" +
-          args.DatabaseError.Message + "\n" + args.DatabaseError.Details);
-      } else {
-        // It is considered as successful as long as there is no error, even the data at the
-        // given path is empty (null).
-        wasSuccessful = true;
-        if (args.Snapshot != null) {
-          var json = args.Snapshot.GetRawJsonValue();
-          if (!string.IsNullOrEmpty(json)) {
-            result = ParseResult(json);
-          }
-        }
-      }
-      isComplete = true;
     }
 
     // Called once per frame when the state is active.
@@ -83,7 +61,6 @@ namespace Hamster.States {
     }
 
     public override StateExitValue Cleanup() {
-      database.GetReference(path).ValueChanged -= HandleResult;
       DestroyUI();
       return new StateExitValue(
         typeof(WaitingForDBLoad<T>), new Results(path, result, wasSuccessful));

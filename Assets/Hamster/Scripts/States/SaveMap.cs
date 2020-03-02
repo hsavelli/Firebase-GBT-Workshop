@@ -89,9 +89,6 @@ namespace Hamster.States {
       dbLevel.Initialize(currentLevel);
       dbLevel.PushData();
 
-      Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventMapCreated,
-        StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
-
       if (Social.localUser.authenticated) {
         Social.ReportProgress(GPGSIds.achievement_map_maker, 100.0f, (bool success) => {
           Debug.Log("Edit a game achiement unlocked. Sucess: " + success);

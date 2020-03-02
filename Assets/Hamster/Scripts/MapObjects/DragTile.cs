@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using UnityEngine;
-using Firebase.RemoteConfig;
 
 namespace Hamster.MapObjects {
 
@@ -22,8 +21,7 @@ namespace Hamster.MapObjects {
     public float Drag { get; private set; }
 
     private void Start() {
-      Drag = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigSandTileDrag).DoubleValue;
+      Drag = 1;
     }
 
     void OnTriggerEnter(Collider collider) {

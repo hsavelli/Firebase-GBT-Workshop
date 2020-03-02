@@ -46,7 +46,6 @@ namespace Hamster.States {
     // is added to the stack.
     public override void Initialize() {
       CommonData.mainGame.SelectAndPlayMusic(CommonData.prefabs.menuMusic, true);
-      SetFirebaseMessagingListeners();
       InitializeUI();
     }
 
@@ -70,7 +69,6 @@ namespace Hamster.States {
           return;
         }
       }
-      SetFirebaseMessagingListeners();
       InitializeUI();
     }
 
@@ -99,12 +97,10 @@ namespace Hamster.States {
     }
 
     public override void Suspend() {
-      RemoveFirebaseMessagingListeners();
       HideUI();
     }
 
     public override StateExitValue Cleanup() {
-      RemoveFirebaseMessagingListeners();
       DestroyUI();
       return null;
     }
@@ -113,7 +109,6 @@ namespace Hamster.States {
       if (source == menuComponent.PlayButton.gameObject) {
         manager.SwapState(new LevelSelect());
       } else if (source == menuComponent.EditorButton.gameObject) {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventEditorOpened);
         manager.SwapState(new Editor());
       } else if (source == menuComponent.SharedLevelsButton.gameObject) {
         manager.SwapState(new SharedLevelSelect());
@@ -148,14 +143,6 @@ namespace Hamster.States {
       }
     }
 
-    private void SetFirebaseMessagingListeners() {
-      Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;
-    }
-
-    private void RemoveFirebaseMessagingListeners() {
-      Firebase.Messaging.FirebaseMessaging.MessageReceived -= OnMessageReceived;
-    }
-
     void HandleConversionResult(System.Threading.Tasks.Task convertTask) {
       if (convertTask.IsCanceled) {
         Debug.Log("Conversion canceled.");
@@ -168,8 +155,6 @@ namespace Hamster.States {
       }
     }
 
-    public void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e) {
-      QueueState(new MessageReceived(e));
-    }
+  
   }
 }

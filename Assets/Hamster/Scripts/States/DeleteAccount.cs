@@ -17,7 +17,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Firebase.Unity.Editor;
 using Firebase.Auth;
-using Firebase.Database;
 
 namespace Hamster.States {
   // Utility state for deleting a user account.  Displays a
@@ -51,14 +50,9 @@ namespace Hamster.States {
           } else {
             // Delete the user's profile data:
             string path = CommonData.DBUserTablePath + userId;
-            FirebaseDatabase database = FirebaseDatabase.GetInstance(CommonData.app);
 
-            // Delete all maps associated with this user:
-            database.GetReference(path).SetValueAsync(null);
-            foreach (MapListEntry map in CommonData.currentUser.data.maps) {
-              path = CommonData.DBMapTablePath + map.mapId;
-              database.GetReference(path).SetValueAsync(null);
-            }
+            //Write here the code to access Firebase database and delete account
+
             GooglePlayServicesSignIn.SignOut();
             SignInState.SetState(SignInState.State.SignedOut);
 

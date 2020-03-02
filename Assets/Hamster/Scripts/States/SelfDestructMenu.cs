@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System.Runtime.CompilerServices;
-using Firebase.Crashlytics;
 using UnityEngine;
 
 namespace Hamster.States {
