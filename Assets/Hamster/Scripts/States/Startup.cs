@@ -77,18 +77,13 @@ namespace Hamster.States {
           manager.SwapState(new States.MainMenu());
         }
       } else if (results.sourceState == typeof(FetchUserData)) {
-        // Just got back from fetching the user.
-        // Did THAT work?
-        InitializeAnalytics();
-        if (CommonData.testLab.IsTestingScenario) {
-          CommonData.currentReplayData = StringConstants.TestLoopReplayData;
-          manager.SwapState(new States.TestLoop(CommonData.testLab.ScenarioNumber));
-        } else {
-          manager.SwapState(new States.MainMenu());
-          if (CommonData.currentUser == null) {
+                // Just got back from fetching the user.
+                // Did THAT work?
+        manager.SwapState(new States.MainMenu());
+        if (CommonData.currentUser == null)
+        {
             //  If we can't fetch data, tell the user.
             manager.PushState(new BasicDialog(StringConstants.CouldNotFetchUserData));
-          }
         }
       } else {
         throw new System.Exception("Returned from unknown state: " + results.sourceState);

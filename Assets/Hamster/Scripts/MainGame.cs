@@ -196,11 +196,10 @@ namespace Hamster {
       CommonData.app = Firebase.FirebaseApp.Create(ops);
 
       // Setup database url when running in the editor
-#if UNITY_EDITOR
-      if (CommonData.app.Options.DatabaseUrl == null) {
-        CommonData.app.SetEditorDatabaseUrl("https://fir-gbt-workshop.firebaseio.com");
+      if (CommonData.app.Options.DatabaseUrl == null)
+      {
+          CommonData.app.SetEditorDatabaseUrl("https://fir-gbt-workshop.firebaseio.com/");
       }
-#endif
 
       Screen.orientation = ScreenOrientation.Landscape;
 

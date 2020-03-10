@@ -14,21 +14,25 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase.Leaderboard;
 
-namespace Hamster.Menus {
+namespace Hamster.Menus
+{
 
-  // Interface class for providing code access to the GUI
-  // elements in the high score menu prefab.
-  public class TopTimesGUI : BaseMenu {
+    // Interface class for providing code access to the GUI
+    // elements in the high score menu prefab.
+    public class TopTimesGUI : BaseMenu
+    {
 
-    // These fields are set in the inspector.
-    public UnityEngine.UI.Text LevelName;
-    public UnityEngine.UI.Text RecordNames;
-    public UnityEngine.UI.Text RecordTimes;
-    public GUIButton TimeFrameButton30Days;
-    public Text TimeFrame30DaysText;
-    public GUIButton TimeFrameButtonAllTime;
-    public Text TimeFrameAllTimeText;
-    public GUIButton BackButton;
-  }
+        // These fields are set in the inspector.
+        public UnityEngine.UI.Text LevelName;
+        public UnityEngine.UI.Text RecordNames;
+        public UnityEngine.UI.Text RecordTimes;
+        public GUIButton TimeFrameButton30Days;
+        public Text TimeFrame30DaysText;
+        public GUIButton TimeFrameButtonAllTime;
+        public Text TimeFrameAllTimeText;
+        public GUIButton BackButton;
+        public LeaderboardController LeaderboardControllerPrefab;
+    }
 }

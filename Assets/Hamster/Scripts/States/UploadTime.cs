@@ -15,8 +15,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Firebase.Leaderboard;
 
-namespace Hamster.States {
+namespace Hamster.States
+{
 
     // State used to upload the time taken to beat the current level to the database.
     class UploadTime : BaseState
@@ -27,5 +29,75 @@ namespace Hamster.States {
         // Whether the time was uploaded, used during cleanup.
         private bool TimeUploaded { get; set; }
 
+        private static LeaderboardController LeaderboardController;
+
+        public UploadTime(long time, LeaderboardController leaderboardController)
+        {
+            Time = time;
+            LeaderboardController = leaderboardController;
+            LeaderboardController.enabled = true;
+            LeaderboardController.AllScoreDataPath =
+                TimeDataUtil.GetDBRankPath(CommonData.gameWorld.worldMap);
+        }
+
+        public override void Initialize()
+        {
+            CommonData.mainCamera.mode = CameraController.CameraMode.Gameplay;
+            TimeUploaded = false;
+
+            manager.PushState(new WaitForTask(
+              TimeDataUtil.UploadReplay(Time,
+                CommonData.gameWorld.worldMap, CommonData.gameWorld.PreviousReplayData)
+                    .ContinueWith(task => LeaderboardController.AddScore(task.Result)),
+                StringConstants.UploadTimeTitle, true));
+        }
+
+        public override void Resume(StateExitValue results)
+        {
+            CommonData.mainCamera.mode = CameraController.CameraMode.Gameplay;
+            if (results != null)
+            {
+                if (results.sourceState == typeof(WaitForTask))
+                {
+                    WaitForTask.Results resultData = results.data as WaitForTask.Results;
+
+                    if (resultData.task.IsFaulted)
+                    {
+                        Debug.LogException(resultData.task.Exception);
+                        manager.SwapState(new BasicDialog(StringConstants.UploadError));
+                        return;
+                    }
+
+                    TimeUploaded = true;
+                   
+                    // Show the top times for the level, highlighting which one was just uploaded.
+                    var task =
+                      resultData.task as System.Threading.Tasks.Task<List<UserScore>>;
+                    List<UserScore> times = null;
+                    if (task != null)
+                    {
+                        times = task.Result;
+                    }
+                    manager.SwapState(new TopTimes(times));
+                    return;
+                }
+            }
+            // This is a passthrough state, so if we are still the top, pop ourselves.
+            if (manager.CurrentState() == this)
+            {
+                manager.PopState();
+            }
+        }
+
+        public override void Suspend()
+        {
+            CommonData.mainCamera.mode = CameraController.CameraMode.Menu;
+        }
+
+        public override StateExitValue Cleanup()
+        {
+            CommonData.mainCamera.mode = CameraController.CameraMode.Menu;
+            return new StateExitValue(typeof(UploadTime), TimeUploaded);
+        }
     }
 }

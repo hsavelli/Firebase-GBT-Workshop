@@ -15,60 +15,69 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Hamster.States {
-  class LevelSelect : BaseLevelSelect {
-    private LevelDirectory levelDir;
-    public const string LevelDirectoryJson = "LevelList";
+namespace Hamster.States
+{
+    class LevelSelect : BaseLevelSelect
+    {
+        private LevelDirectory levelDir;
+        public const string LevelDirectoryJson = "LevelList";
 
-    // Called whenever a level is selected in the menu.
-    protected override void LoadLevel(int i) {
-      TextAsset json = Resources.Load(levelDir.levels[currentLoadedMap].filename) as TextAsset;
-      currentLevel = JsonUtility.FromJson<LevelMap>(json.ToString());
-      currentLevel.DatabasePath = null;
-      CommonData.gameWorld.DisposeWorld();
-      CommonData.gameWorld.SpawnWorld(currentLevel);
+        // Called whenever a level is selected in the menu.
+        protected override void LoadLevel(int i)
+        {
+            TextAsset json = Resources.Load(levelDir.levels[currentLoadedMap].filename) as TextAsset;
+            currentLevel = JsonUtility.FromJson<LevelMap>(json.ToString());
+            currentLevel.DatabasePath = null;
+            CommonData.gameWorld.DisposeWorld();
+            CommonData.gameWorld.SpawnWorld(currentLevel);
+        }
+
+        // Initialization method.  Called after the state is added to the stack.
+        public override void Initialize()
+        {
+            TextAsset json = Resources.Load(LevelDirectoryJson) as TextAsset;
+            levelDir = JsonUtility.FromJson<LevelDirectory>(json.ToString());
+
+            string[] levelNames = new string[levelDir.levels.Count];
+
+            // Generate a list of level names.
+            for (int i = 0; i < levelDir.levels.Count; i++)
+            {
+                levelNames[i] = levelDir.levels[i].name;
+            }
+            MenuStart(levelNames, StringConstants.BuiltinLevelScreenTitle);
+        }
+
+        [System.Serializable]
+        public class LevelDirectory
+        {
+            public LevelDirectory() { }
+
+            public LevelDirectory(List<PremadeLevelEntry> levels)
+            {
+                this.levels = levels;
+            }
+
+            public List<PremadeLevelEntry> levels;
+        }
+
+
+        [System.Serializable]
+        public class PremadeLevelEntry
+        {
+            public string name;
+            public string description;
+            public string filename;
+            public string replay;
+
+            public PremadeLevelEntry() { }
+
+            public PremadeLevelEntry(string name, string description, string filename)
+            {
+                this.name = name;
+                this.description = description;
+                this.filename = filename;
+            }
+        }
     }
-
-    // Initialization method.  Called after the state is added to the stack.
-    public override void Initialize() {
-      TextAsset json = Resources.Load(LevelDirectoryJson) as TextAsset;
-      levelDir = JsonUtility.FromJson<LevelDirectory>(json.ToString());
-
-      string[] levelNames = new string[levelDir.levels.Count];
-
-      // Generate a list of level names.
-      for (int i = 0; i < levelDir.levels.Count; i++) {
-        levelNames[i] = levelDir.levels[i].name;
-      }
-      MenuStart(levelNames, StringConstants.BuiltinLevelScreenTitle);
-    }
-
-    [System.Serializable]
-    public class LevelDirectory {
-      public LevelDirectory() { }
-
-      public LevelDirectory(List<PremadeLevelEntry> levels) {
-        this.levels = levels;
-      }
-
-      public List<PremadeLevelEntry> levels;
-    }
-
-
-    [System.Serializable]
-    public class PremadeLevelEntry {
-      public string name;
-      public string description;
-      public string filename;
-      public string replay;
-
-      public PremadeLevelEntry() {}
-
-      public PremadeLevelEntry(string name, string description, string filename) {
-        this.name = name;
-        this.description = description;
-        this.filename = filename;
-      }
-    }
-  }
 }

@@ -14,20 +14,24 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using Firebase.Leaderboard;
 
-namespace Hamster.Menus {
+namespace Hamster.Menus
+{
 
-  // Interface class for providing code access to the GUI
-  // elements in the level complete prefab.  It's the menu
-  // that shows up when you finish a level.
-  public class LevelFinishedGUI : BaseMenu {
+    // Interface class for providing code access to the GUI
+    // elements in the level complete prefab.  It's the menu
+    // that shows up when you finish a level.
+    public class LevelFinishedGUI : BaseMenu
+    {
 
-    // These fields are set in the inspector.
-    public UnityEngine.UI.Text ElapsedTimeText;
-    public UnityEngine.UI.Text NewRecordText;
-    public GUIButton SubmitButton;
-    public GUIButton RetryButton;
-    public GUIButton MainButton;
-    public GUIButton LevelsButton;
-  }
+        // These fields are set in the inspector.
+        public UnityEngine.UI.Text ElapsedTimeText;
+        public UnityEngine.UI.Text NewRecordText;
+        public GUIButton SubmitButton;
+        public GUIButton RetryButton;
+        public GUIButton MainButton;
+        public GUIButton LevelsButton;
+        public LeaderboardController LeaderboardControllerPrefab;
+    }
 }
