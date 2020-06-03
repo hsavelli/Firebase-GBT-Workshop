@@ -152,19 +152,14 @@ namespace Hamster {
 
     // Invites:
     //--------------------------
-    public const string RemoteConfigInviteTitleText = "invite_title_text";
     public const string DefaultInviteTitleText = "Share your map with your friends!";
 
-    public const string RemoteConfigInviteMessageText = "invite_message_text";
     public const string DefaultInviteMessageText = "Try out this map I made for MechaHamster!";
 
-    public const string RemoteConfigInviteCallToActionText = "invite_call_to_action_text";
     public const string DefaultInviteCallToActionText = "Play it!";
 
-    public const string RemoteConfigEmailSubjectText = "email_subject_text";
     public const string DefaultEmailSubjectText = "I've sent you a map for MechaHamster!";
 
-    public const string RemoteConfigEmailContentHtml = "email_contents_html";
     public const string DefaultEmailContentHtml =
       "I made this map for MechaHamster, and I'm sharing it with you!  " +
       "<a href=\"%%APPINVITE_LINK_PLACEHOLDER%%\">Click here</a> to play it!";
@@ -173,30 +168,6 @@ namespace Hamster {
 
     public const string SharedMapUserMessage = "Someone has shared a new map with you!:\n" +
       "{0}\nFind it under 'Shared Maps'!";
-
-    // Remote Config:
-    //--------------------------
-    // Scale for the camera height, in VR mode.
-    public const string RemoteConfigVRHeightScale = "VR_height_scale";
-    // Gravity of the world.
-    public const string RemoteConfigPhysicsGravity = "physics_gravity";
-    // AccelerationTile
-    public const string RemoteConfigAccelerationTileForce = "acceleration_tile_force";
-    // DragTile
-    public const string RemoteConfigSandTileDrag = "sand_tile_drag";
-    // JumpTile
-    public const string RemoteConfigJumpTileVelocity = "jump_tile_velocity";
-    // MineTile
-    public const string RemoteConfigMineTileForce = "mine_tile_force";
-    public const string RemoteConfigMineTileRadius = "mine_tile_radius";
-    public const string RemoteConfigMineTileUpwardsMod = "mine_tile_upwards_mod";
-    // SpikesTile
-    public const string RemoteConfigSpikesTileForce = "spikes_tile_force";
-    public const string RemoteConfigSpikesTileRadius = "spikes_tile_radius";
-    public const string RemoteConfigSpikesTileUpwardsMod = "spikes_tile_upwards_mod";
-    // Feature Flags
-    public const string RemoteConfigGameplayRecordingEnabled = "feature_gameplay_recording";
-
 
     // Messaging:
     //--------------------------
