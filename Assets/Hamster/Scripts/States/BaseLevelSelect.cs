@@ -146,9 +146,11 @@ namespace Hamster.States {
         manager.PushState(new TopTimes(null));
       } else if (source == menuComponent.PlayButton.gameObject) {
         if (CommonData.inVrMode) {
-          manager.PushState(new ControllerHelp(Gameplay.GameplayMode.Gameplay));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Level Started", new Firebase.Analytics.Parameter("Level Name", levelNames[mapSelection]));
+            manager.PushState(new ControllerHelp(Gameplay.GameplayMode.Gameplay));
         } else {
-          manager.PushState(new Gameplay(Gameplay.GameplayMode.Gameplay));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Level Started", new Firebase.Analytics.Parameter("Level Name", levelNames[mapSelection]));
+            manager.PushState(new Gameplay(Gameplay.GameplayMode.Gameplay));
         }
       } else if (source == menuComponent.BackButton.gameObject) {
         ChangePage(-1);

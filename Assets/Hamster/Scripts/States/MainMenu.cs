@@ -90,12 +90,11 @@ namespace Hamster.States {
       // Display the account button on all devices, including in the Unity Editor
       menuComponent.AccountButton.gameObject.SetActive(CommonData.ShowInternetMenus());
 
-      // Editor is disabled in VR mode.
-      menuComponent.EditorButton.gameObject.SetActive(
-          !CommonData.inVrMode && CommonData.ShowInternetMenus());
+            // Editor is disabled in VR mode.
+            menuComponent.EditorButton.gameObject.SetActive(false);
 
-      // If you're NOT signed in, the main menu has a button to sign in:
-      menuComponent.SignInButton.gameObject.SetActive(CommonData.isNotSignedIn);
+            // If you're NOT signed in, the main menu has a button to sign in:
+            menuComponent.SignInButton.gameObject.SetActive(CommonData.isNotSignedIn);
     }
 
     public override void Suspend() {
@@ -113,7 +112,6 @@ namespace Hamster.States {
       if (source == menuComponent.PlayButton.gameObject) {
         manager.SwapState(new LevelSelect());
       } else if (source == menuComponent.EditorButton.gameObject) {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventEditorOpened);
         manager.SwapState(new Editor());
       } else if (source == menuComponent.SharedLevelsButton.gameObject) {
         manager.SwapState(new SharedLevelSelect());

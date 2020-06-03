@@ -54,13 +54,10 @@ namespace Hamster.States {
       ElapsedGameTime = CommonData.gameWorld.ElapsedGameTimeMs;
       ScoreUploaded = false;
 
-      // Only log completion if the level is not being edited, to ignore in progress levels.
-      if (!CommonData.gameWorld.HasPendingEdits) {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventMapFinished,
-          StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
-      }
+      Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventMapFinished,
+        StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
 
-      dialogComponent = SpawnUI<Menus.LevelFinishedGUI>(StringConstants.PrefabsLevelFinishedMenu);
+            dialogComponent = SpawnUI<Menus.LevelFinishedGUI>(StringConstants.PrefabsLevelFinishedMenu);
       dialogComponent.NewRecordText.gameObject.SetActive(false);
       // We only allow them to submit times if we're online, and
       // not on a map that has pending edits.
@@ -127,11 +124,20 @@ namespace Hamster.States {
         CommonData.mainGame.SelectAndPlayMusic(CommonData.prefabs.menuMusic, true);
         manager.PopState();
       } else if (source == dialogComponent.RetryButton.gameObject) {
+           Firebase.Analytics.FirebaseAnalytics.LogEvent("Retry", StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
         manager.SwapState(new Gameplay(mode));
       } else if (source == dialogComponent.SubmitButton.gameObject) {
-        LeaderboardController = LeaderboardController ??
+
+         Firebase.Analytics.FirebaseAnalytics.LogEvent("Submit", StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
+
+
+
+
+                LeaderboardController = LeaderboardController ??
             GameObject.FindObjectOfType<LeaderboardController>() ??
             InstantiateLeaderboardController();
+
+
         manager.PushState(new UploadTime(ElapsedGameTime, LeaderboardController));
       } else if (source == dialogComponent.MainButton.gameObject) {
         manager.ClearStack(new MainMenu());
