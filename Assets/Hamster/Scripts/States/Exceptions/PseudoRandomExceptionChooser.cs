@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using Firebase.Auth;
+using Firebase.Crashlytics;
 using UnityEngine;
 using Random = System.Random;
 
@@ -26,12 +27,19 @@ namespace Hamster.States {
     public static void Throw(String message) {
       int exceptionIndex = RandomGenerator.Next(0, 6);
 
+            if (FirebaseAuth.DefaultInstance.CurrentUser != null)
+            {
+                Crashlytics.SetUserId(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            }  
+
       switch (exceptionIndex) {
         case 0:
+          Crashlytics.Log("Menu meltdown is imminent.");
           Debug.Log("Menu meltdown is imminent.");
           ThrowMenuMeltdown(message);
           break;
         case 1:
+          Crashlytics.Log("User triggered another forced exception.");
           Debug.Log("User triggered another forced exception.");
           ThrowAnotherForcedException(message);
           break;
@@ -60,6 +68,7 @@ namespace Hamster.States {
       }
       catch (CrashlyticsCaughtException e) {
         Debug.Log(e);
+        Crashlytics.LogException(e);
       }
     }
 
@@ -69,7 +78,8 @@ namespace Hamster.States {
       }
       catch (CrashlyticsCaughtException e) {
         Debug.Log(e);
-      }
+                Crashlytics.LogException(e);
+            }
     }
 
     private static void ThrowIntentionallyObscureException() {
@@ -78,7 +88,8 @@ namespace Hamster.States {
       }
       catch (CrashlyticsCaughtException e) {
         Debug.Log(e);
-      }
+                Crashlytics.LogException(e);
+            }
     }
 
     private static void ThrowRandomTextException(String message) {
@@ -87,7 +98,8 @@ namespace Hamster.States {
       }
       catch (CrashlyticsCaughtException e) {
         Debug.Log(e);
-      }
+                Crashlytics.LogException(e);
+            }
     }
 
     private static void ThrowStatisticallyAsLikelyException(String message) {
@@ -96,7 +108,8 @@ namespace Hamster.States {
       }
       catch (CrashlyticsCaughtException e) {
         Debug.Log(e);
-      }
+                Crashlytics.LogException(e);
+            }
     }
   }
 }

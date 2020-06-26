@@ -35,6 +35,7 @@ namespace Hamster
     /// Stores the signed-in state in user preferences.
     /// </summary>
     public static void SetState(SignInState.State state) {
+            Firebase.Analytics.FirebaseAnalytics.SetUserProperty("Signin method", ((int)state).ToString());  
       PlayerPrefs.SetInt(StringConstants.SignInState, (int)state);
     }
   }

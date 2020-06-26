@@ -56,7 +56,7 @@ namespace Hamster.States {
 
       // Only log completion if the level is not being edited, to ignore in progress levels.
       if (!CommonData.gameWorld.HasPendingEdits) {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(StringConstants.AnalyticsEventMapFinished,
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Level finished",
           StringConstants.AnalyticsParamMapId, CommonData.gameWorld.worldMap.mapId);
       }
 

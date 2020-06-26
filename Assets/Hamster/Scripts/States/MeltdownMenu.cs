@@ -37,7 +37,7 @@ namespace Hamster.States {
     }
 
     private void InitializeUI() {
-      LogCrashlyticsException();
+      LogCrashException();
       if (meltdownGUI == null) {
         meltdownGUI = SpawnUI<Menus.MeltdownMenuGUI>(StringConstants.PrefabMeltdownMenu);
       }
@@ -72,7 +72,7 @@ namespace Hamster.States {
     /// Log an exception to Crashlytics.
     /// </summary>
     /// <exception cref="CrashlyticsCaughtException"></exception>
-    private void LogCrashlyticsException() {
+    private void LogCrashException() {
       // This is a bit odd, throwing the exception and then catching it immediately,
       // but this allows crashlytics to be able to capture the stack trace.
       PseudoRandomExceptionChooser.Throw("User hit the \"Self Destruct!\" button too many times.");
