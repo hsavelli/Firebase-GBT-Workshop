@@ -15,8 +15,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Firebase.Unity.Editor;
-
 
 namespace Hamster.States {
   public class Gameplay : BaseState {
