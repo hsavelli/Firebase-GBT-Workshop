@@ -65,15 +65,7 @@ namespace Hamster {
       mainGame = FindObjectOfType<MainGame>();
       // Needs to be normalized because it was set via the inspector.
       if (CommonData.inVrMode) {
-        float VRHeightScalar;
-        try {
-          VRHeightScalar =
-          (float)Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue(
-          StringConstants.RemoteConfigVRHeightScale).DoubleValue;
-        } catch (System.Exception) {
-          // If the RemoteConfig failed, use a sensible value.
-          VRHeightScalar = 0.65f;
-        }
+        float VRHeightScalar = 0.65f;
       }
     }
 

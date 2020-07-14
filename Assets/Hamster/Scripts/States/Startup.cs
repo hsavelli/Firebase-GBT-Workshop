@@ -54,19 +54,6 @@ namespace Hamster.States {
       }
     }
 
-    // Start gathering analytic data.
-    void InitializeAnalytics() {
-      Firebase.Analytics.FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-
-      // Set the user's sign up method.
-      Firebase.Analytics.FirebaseAnalytics.SetUserProperty(
-        Firebase.Analytics.FirebaseAnalytics.UserPropertySignUpMethod,
-        "Google");
-
-      if (CommonData.currentUser != null)
-        Firebase.Analytics.FirebaseAnalytics.SetUserId(CommonData.currentUser.data.id);
-    }
-
     // Got back from either fetching userdata from the database, or
     // requesting an anonymous login.
     // If we got back from login, request/start a user with that ID.
@@ -87,7 +74,6 @@ namespace Hamster.States {
       } else if (results.sourceState == typeof(FetchUserData)) {
         // Just got back from fetching the user.
         // Did THAT work?
-        InitializeAnalytics();
         if (CommonData.testLab.IsTestingScenario) {
           CommonData.currentReplayData = StringConstants.TestLoopReplayData;
           manager.SwapState(new States.TestLoop(CommonData.testLab.ScenarioNumber));

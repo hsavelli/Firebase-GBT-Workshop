@@ -14,7 +14,6 @@
 
 using UnityEngine;
 using Hamster.Utilities;
-using Firebase.RemoteConfig;
 
 namespace Hamster.MapObjects {
 
@@ -50,12 +49,9 @@ namespace Hamster.MapObjects {
     public AudioClip[] ExplosionAudio;
 
     private void Start() {
-      ExplosionForce = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigMineTileForce).DoubleValue;
-      ExplosionRadius = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigMineTileRadius).DoubleValue;
-      UpwardsModifier = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigMineTileUpwardsMod).DoubleValue;
+      ExplosionForce = 10.0f;
+      ExplosionRadius = 2.0f;
+      UpwardsModifier = 0.2f;
     }
 
     public void FixedUpdate() {

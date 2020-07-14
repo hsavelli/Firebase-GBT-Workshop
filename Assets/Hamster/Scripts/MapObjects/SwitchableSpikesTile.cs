@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using UnityEngine;
-using Firebase.RemoteConfig;
 
 namespace Hamster.MapObjects {
 
@@ -33,12 +32,9 @@ namespace Hamster.MapObjects {
     public bool SpikesActive { get; private set; }
 
     private void Start() {
-      ExplosionForce = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigSpikesTileForce).DoubleValue;
-      ExplosionRadius = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigSpikesTileRadius).DoubleValue;
-      ExplosionUpwardsModifier = (float)FirebaseRemoteConfig.GetValue(
-        StringConstants.RemoteConfigSpikesTileUpwardsMod).DoubleValue;
+      ExplosionForce = 10.0f;
+      ExplosionRadius = 1.0f;
+      ExplosionUpwardsModifier = -0.5f;
 
       ForceState(EnabledAtStart);
     }

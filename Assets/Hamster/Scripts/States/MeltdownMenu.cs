@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using Firebase.Crashlytics;
 using UnityEngine;
 using UnityEngine.UI;
 
