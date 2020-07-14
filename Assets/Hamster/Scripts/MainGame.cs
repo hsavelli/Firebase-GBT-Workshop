@@ -153,12 +153,15 @@ namespace Hamster {
       stateManager.OnGUI();
     }
 
+<<<<<<< Updated upstream
     // Sets the default values for remote config.  These are the values that will
     // be used if we haven't fetched yet.
     System.Threading.Tasks.Task InitializeRemoteConfig() {
       return null;
     }
 
+=======
+>>>>>>> Stashed changes
     // When the app starts, check to make sure that we have
     // the required dependencies to use Firebase, and if not,
     // add them if possible.
@@ -182,13 +185,21 @@ namespace Hamster {
     }
 
     void InitializeFirebaseComponents() {
+<<<<<<< Updated upstream
         firebaseInitialized = true;
+=======
+            firebaseInitialized = true;
+>>>>>>> Stashed changes
     }
 
     // Actually start the game, once we've verified that everything
     // is working and we have the firebase prerequisites ready to go.
     void StartGame() {
       FirebaseApp app = FirebaseApp.DefaultInstance;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
       CommonData.prefabs = FindObjectOfType<PrefabList>();
       CommonData.mainCamera = FindObjectOfType<CameraController>();
       CommonData.mainGame = this;

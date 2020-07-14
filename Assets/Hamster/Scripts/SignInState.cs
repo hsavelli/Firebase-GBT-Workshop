@@ -35,7 +35,11 @@ namespace Hamster
     /// Stores the signed-in state in user preferences.
     /// </summary>
     public static void SetState(SignInState.State state) {
+<<<<<<< Updated upstream
       PlayerPrefs.SetInt(StringConstants.SignInState, (int)state);
+=======
+        PlayerPrefs.SetInt(StringConstants.SignInState, (int)state);
+>>>>>>> Stashed changes
     }
   }
 }

@@ -91,7 +91,11 @@ namespace Hamster.States {
         CommonData.vrPointer.SetActive(false);
       }
       Time.timeScale = 1.0f;
+<<<<<<< Updated upstream
       double gravity_y = -10.0;
+=======
+      double gravity_y = -20.0f;
+>>>>>>> Stashed changes
       Physics.gravity = new Vector3(0, (float)gravity_y, 0);
       CommonData.gameWorld.ResetMap();
       Utilities.HideDuringGameplay.OnGameplayStateChange(true);

@@ -21,7 +21,11 @@ namespace Hamster.MapObjects {
     public float Drag { get; private set; }
 
     private void Start() {
+<<<<<<< Updated upstream
       Drag = 1;
+=======
+      Drag = 5.0f;
+>>>>>>> Stashed changes
     }
 
     void OnTriggerEnter(Collider collider) {

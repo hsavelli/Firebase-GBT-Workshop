@@ -24,11 +24,15 @@ namespace Hamster.States {
     /// </summary>
     /// <param name="message"></param>
     public static void Throw(String message) {
+<<<<<<< Updated upstream
       
+=======
+>>>>>>> Stashed changes
       int exceptionIndex = RandomGenerator.Next(0, 6);
 
       switch (exceptionIndex) {
         case 0:
+<<<<<<< Updated upstream
           Debug.Log("Menu meltdown is imminent.");
           ThrowMenuMeltdown(message);
           break;
@@ -50,6 +54,23 @@ namespace Hamster.States {
           break;
         default:
           Debug.Log(String.Format("Could not find index {0} - using default meltdown exception", exceptionIndex));
+=======
+          ThrowMenuMeltdown(message);
+          break;
+        case 1:
+          ThrowAnotherForcedException(message);
+          break;
+        case 2:
+          ThrowIntentionallyObscureException();
+          break;
+        case 3:
+          ThrowRandomTextException(message);
+          break;
+        case 4:
+          ThrowStatisticallyAsLikelyException(message);
+          break;
+        default:
+>>>>>>> Stashed changes
           ThrowMenuMeltdown(message);
           break;
       }
@@ -59,8 +80,13 @@ namespace Hamster.States {
       try {
         throw new MenuMeltdownException(message);
       }
+<<<<<<< Updated upstream
       catch (Exception e) {
         Debug.Log(e);
+=======
+      catch (CrashlyticsCaughtException e) {
+        Debug.LogException(e);
+>>>>>>> Stashed changes
       }
     }
 
@@ -68,7 +94,11 @@ namespace Hamster.States {
       try {
         throw new AnotherForcedException(message);
       }
+<<<<<<< Updated upstream
       catch (Exception e) {
+=======
+      catch (CrashlyticsCaughtException e) {
+>>>>>>> Stashed changes
         Debug.LogException(e);
       }
     }
@@ -77,7 +107,11 @@ namespace Hamster.States {
       try {
         throw new IntentionallyObscureException("An error occurred.");
       }
+<<<<<<< Updated upstream
       catch (Exception e) {
+=======
+      catch (CrashlyticsCaughtException e) {
+>>>>>>> Stashed changes
         Debug.LogException(e);
       }
     }
@@ -86,8 +120,13 @@ namespace Hamster.States {
       try {
         throw new RandomTextException(message);
       }
+<<<<<<< Updated upstream
       catch (Exception e) {
         Debug.Log(e);
+=======
+      catch (CrashlyticsCaughtException e) {
+        Debug.LogException(e);
+>>>>>>> Stashed changes
       }
     }
 
@@ -95,8 +134,13 @@ namespace Hamster.States {
       try {
         throw new StatisticallyAsLikelyException(message);
       }
+<<<<<<< Updated upstream
       catch (Exception e) {
         Debug.Log(e);
+=======
+      catch (CrashlyticsCaughtException e) {
+        Debug.LogException(e);
+>>>>>>> Stashed changes
       }
     }
 

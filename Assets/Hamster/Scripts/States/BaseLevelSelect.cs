@@ -146,9 +146,15 @@ namespace Hamster.States {
         manager.PushState(new TopTimes());
       } else if (source == menuComponent.PlayButton.gameObject) {
         if (CommonData.inVrMode) {
+<<<<<<< Updated upstream
           manager.PushState(new ControllerHelp(Gameplay.GameplayMode.Gameplay));
         } else {
           manager.PushState(new Gameplay(Gameplay.GameplayMode.Gameplay));
+=======
+            manager.PushState(new ControllerHelp(Gameplay.GameplayMode.Gameplay));
+        } else {
+            manager.PushState(new Gameplay(Gameplay.GameplayMode.Gameplay));
+>>>>>>> Stashed changes
         }
       } else if (source == menuComponent.BackButton.gameObject) {
         ChangePage(-1);

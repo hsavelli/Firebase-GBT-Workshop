@@ -49,9 +49,15 @@ namespace Hamster.MapObjects {
     public AudioClip[] ExplosionAudio;
 
     private void Start() {
+<<<<<<< Updated upstream
       ExplosionForce = 3.5f;
       ExplosionRadius = 2.0f;
       UpwardsModifier = 1;
+=======
+      ExplosionForce = 10.0f;
+      ExplosionRadius = 2.0f;
+      UpwardsModifier = 0.2f;
+>>>>>>> Stashed changes
     }
 
     public void FixedUpdate() {

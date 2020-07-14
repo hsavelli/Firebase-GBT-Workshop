@@ -54,11 +54,14 @@ namespace Hamster.States {
       }
     }
 
+<<<<<<< Updated upstream
     // Start gathering analytic data.
     void InitializeAnalytics() {
      
     }
 
+=======
+>>>>>>> Stashed changes
     // Got back from either fetching userdata from the database, or
     // requesting an anonymous login.
     // If we got back from login, request/start a user with that ID.
@@ -79,7 +82,6 @@ namespace Hamster.States {
       } else if (results.sourceState == typeof(FetchUserData)) {
         // Just got back from fetching the user.
         // Did THAT work?
-        InitializeAnalytics();
         if (CommonData.testLab.IsTestingScenario) {
           CommonData.currentReplayData = StringConstants.TestLoopReplayData;
           manager.SwapState(new States.TestLoop(CommonData.testLab.ScenarioNumber));

@@ -29,7 +29,11 @@ namespace Hamster.MapObjects {
     public float Acceleration { get; private set; }
 
     private void Start() {
+<<<<<<< Updated upstream
       Acceleration = 1;
+=======
+      Acceleration = 24.0f;
+>>>>>>> Stashed changes
     }
 
     public void FixedUpdate() {

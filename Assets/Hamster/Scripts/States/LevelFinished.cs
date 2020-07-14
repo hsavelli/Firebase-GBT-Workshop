@@ -51,12 +51,15 @@ namespace Hamster.States {
       ElapsedGameTime = CommonData.gameWorld.ElapsedGameTimeMs;
       ScoreUploaded = false;
 
+<<<<<<< Updated upstream
       // Only log completion if the level is not being edited, to ignore in progress levels.
       if (!CommonData.gameWorld.HasPendingEdits) {
         Debug.Log(StringConstants.AnalyticsEventMapFinished + 
           StringConstants.AnalyticsParamMapId +  CommonData.gameWorld.worldMap.mapId);
       }
 
+=======
+>>>>>>> Stashed changes
       dialogComponent = SpawnUI<Menus.LevelFinishedGUI>(StringConstants.PrefabsLevelFinishedMenu);
       dialogComponent.NewRecordText.gameObject.SetActive(false);
       // We only allow them to submit times if we're online, and
@@ -126,6 +129,16 @@ namespace Hamster.States {
       } else if (source == dialogComponent.RetryButton.gameObject) {
         manager.SwapState(new Gameplay(mode));
       } else if (source == dialogComponent.SubmitButton.gameObject) {
+<<<<<<< Updated upstream
+=======
+
+        LeaderboardController = LeaderboardController ??
+        GameObject.FindObjectOfType<LeaderboardController>() ??
+        InstantiateLeaderboardController();
+
+
+        manager.PushState(new UploadTime(ElapsedGameTime, LeaderboardController));
+>>>>>>> Stashed changes
       } else if (source == dialogComponent.MainButton.gameObject) {
         manager.ClearStack(new MainMenu());
       }

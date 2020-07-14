@@ -63,6 +63,7 @@ namespace Hamster {
 
     void Start() {
       mainGame = FindObjectOfType<MainGame>();
+<<<<<<< Updated upstream
       // Needs to be normalized because it was set via the inspector.
       if (CommonData.inVrMode) {
         float VRHeightScalar;
@@ -73,6 +74,8 @@ namespace Hamster {
           VRHeightScalar = 0.65f;
         }
       }
+=======
+>>>>>>> Stashed changes
     }
 
     // Pans the camera in a direction during edit mode.

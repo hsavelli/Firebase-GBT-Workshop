@@ -32,9 +32,15 @@ namespace Hamster.MapObjects {
     public bool SpikesActive { get; private set; }
 
     private void Start() {
+<<<<<<< Updated upstream
       ExplosionForce = 1;
       ExplosionRadius = 1;
       ExplosionUpwardsModifier = 1;
+=======
+      ExplosionForce = 10.0f;
+      ExplosionRadius = 1.0f;
+      ExplosionUpwardsModifier = -0.5f;
+>>>>>>> Stashed changes
 
       ForceState(EnabledAtStart);
     }
