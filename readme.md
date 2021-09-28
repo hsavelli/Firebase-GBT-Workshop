@@ -1,3 +1,24 @@
+Firebase Analytics and Tools Workshop   
+======
+This workshop has been built for you, completely based on your feedback. 
+You told us that:
+1)We give you a lot of suggestions and present a lot of material, like LiveOps strategies, game economy concepts, but you sometimes lack the tools to implement those suggestions.
+2)Firebase tools are too hard to implement
+
+In two modules, the Firebase Analytics and Tools Workshop will teach you how to implement the following concepts:
+
+   * [Firebase Analytics][] to measure various aspects of user behavior.
+   * [Firebase Authentication][] to associate user generated content with users.
+   * [Firebase Realtime Database][] to store map and user data in addition to sharing content.
+   * [Firebase Cloud Messaging][] to allow game admins to send push notifications which inform users
+     of new map content.
+   * [Firebase Crashlytics (Beta)][] to capture crashes in game play and help
+     developers diagnose and fix issues.
+   * [Firebase Remote Config][] to allow game admins to run experiments on game data without
+     redeploying a new build of the game.
+   * [Firebase Predictions][] to use the power of machine learning to identify patterns within your game and generate audiences that will enable you deliver customized experiences focused on boosting user retention and revenue.
+     
+
 MechaHamster    {#mechahamster_readme}
 ======
 
@@ -11,32 +32,10 @@ safety?
 [Firebase][] with the [Firebase Unity SDK][], and [Daydream][] with the [Google VR SDK for Unity][]
 into a game project.
 
-## Overview
-
-MechaHamster demonstrates the following concepts:
-
-   * Mobile and [Daydream][] play modes.
-   * [Firebase Analytics][] to measure various aspects of user behavior.
-   * [Firebase Authentication][] to associate user generated content with users.
-   * [Firebase Realtime Database][] to store map and user data in addition to sharing content.
-   * [Firebase Cloud Messaging][] to allow game admins to send push notifications which inform users
-     of new map content.
-   * [Firebase Crashlytics (Beta)][] to capture crashes in game play and help
-     developers diagnose and fix issues.
-   * [Firebase Remote Config][] to allow game admins to run experiments on game data without
-     redeploying a new build of the game.
-   * [Firebase Cloud Storage][] to upload and download replay data of the best playthrough shared by
-     the players in each level. (Disabled by default)
-   * [Firebase Cloud Function][] to limit number of scores in Database and remove unreferenced
-     replay data from Storage.
-   * [Firebase Test Lab][] to allow developers to test their game across a wide variety of hardware
-     and device configurations at once.
-   * [Firebase CLI][] to allow developers to deploy configurations and Cloud Function to Firebase
-     project through console commands.
-
 ## Downloading
-
 [MechaHamster][] source code can be downloaded from [Github][].
+
+This workshop was created after a fork of the project https://github.com/google/mechahamster
 
 > If cloning locally using `git clone`, be sure to use the `--recurse-submodules` flag
 > to ensure required scripts from submodules are present.
