@@ -85,8 +85,6 @@ To contribute the this project see [CONTRIBUTING][].
   [GitHub]: https://github.com/google/mechahamster/
   [Google]: https://google.com
   [Firebase]: https://firebase.google.com/docs/
-  [Daydream]: https://developers.google.com/vr/daydream/overview
-  [Google VR SDK for Unity]: https://developers.google.com/vr/unity/
   [MechaHamster]: https://github.com/google/mechahamster/
   [Firebase Unity SDK]: https://firebase.google.com/docs/unity/setup
   [Unity 5.6 beta]: https://unity3d.com/unity/beta]
@@ -96,9 +94,6 @@ To contribute the this project see [CONTRIBUTING][].
   [Firebase Cloud Messaging]: https://firebase.google.com/docs/cloud-messaging/
   [Firebase Crashlytics (Beta)]: https://firebase.google.com/docs/crashlytics/
   [Firebase Remote Config]: https://firebase.google.com/docs/remote-config/
-  [Firebase Cloud Storage]: https://firebase.google.com/docs/storage/
-  [Firebase Cloud Function]: https://firebase.google.com/docs/functions/
-  [Firebase Test Lab]: https://firebase.google.com/docs/test-lab/
-  [Firebase CLI]: https://firebase.google.com/docs/cli/
+  [Firebase Predictions]: https://firebase.google.com/docs/predictions/
   [MechaHamster Documentation]: https://google.github.io/mechahamster/
   [Building MechaHamster]: https://google.github.io/mechahamster/mechahamster_guide_building.html
